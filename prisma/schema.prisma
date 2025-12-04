@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "darwin", "darwin-arm64"]
+}
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model Product {
+  id                  String    @id @default(uuid())
+  cj_url              String
+  name                String
+  category            String
+  images              String    // Stored as JSON string
+  notes               String?
+  
+  // Costs
+  product_cost        Float
+  shipping_cost       Float
+  lastmile_fee        Float
+  total_cost          Float
+  
+  // Shipping Times
+  processing_days_min Int
+  processing_days_max Int
+  delivery_days_min   Int
+  delivery_days_max   Int
+  total_days_max      Int
+  
+  // Inventory
+  us_warehouse        Boolean
+  inventory_count     Int
+  
+  // Calculated Pricing
+  min_selling_price   Float
+  recommended_price   Float
+  profit_per_sale     Float
+  profit_margin_percent Float
+  
+  // Validation Results
+  validation_passed   Boolean
+  rejection_reasons   String    // Stored as JSON string
+  
+  // AI Analysis
+  ai_scores           String?   // Stored as JSON string
+  ai_overall_score    Float?
+  ai_recommendation   String?   // APPROVE, REVIEW, REJECT
+  ai_explanation_en   String?
+  ai_explanation_kh   String?
+  
+  // Final Status
+  status              String    // approved, review, rejected
+  
+  // Metadata
+  submitted_by        String
+  submitted_at        DateTime  @default(now())
+  reviewed_by         String?
+  reviewed_at         DateTime?
+}

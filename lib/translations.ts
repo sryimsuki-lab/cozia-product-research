@@ -135,6 +135,8 @@ export const translations = {
     viewExisting: "View Existing Product",
     continueAnyway: "Submit Anyway",
     checkingDuplicate: "Checking for duplicates...",
+    copyForAI: "Copy for AI",
+    copied: "Copied!",
   },
   kh: {
     appTitle: "ឧបករណ៍ស្រាវជ្រាវផលិតផល COZIA",
@@ -272,6 +274,8 @@ export const translations = {
     viewExisting: "មើលផលិតផលដែលមាន",
     continueAnyway: "បញ្ជូនទោះជាយ៉ាងណា",
     checkingDuplicate: "កំពុងពិនិត្យមើលផលិតផលស្ទួន...",
+    copyForAI: "ចម្លងសម្រាប់ AI",
+    copied: "បានចម្លង!",
   }
 };
 

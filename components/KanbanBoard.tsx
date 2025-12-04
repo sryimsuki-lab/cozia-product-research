@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { MoreHorizontal, Calendar, CheckCircle, XCircle, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Calendar, CheckCircle, XCircle, Trash2, Copy } from 'lucide-react';
 import { useLanguage } from './LanguageToggle';
 import { updateProductStatus, deleteProduct } from '@/lib/database';
 import { useRouter } from 'next/navigation';
@@ -122,6 +122,32 @@ function ProductCard({ product, t, onUpdate }: { product: Product, t: TranslateF
         setShowMenu(false);
     };
 
+    const [copied, setCopied] = useState(false);
+
+    const handleCopyForAI = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const jsonData = {
+            product_name: product.name,
+            supplier_price: product.product_cost,
+            shipping_cost: product.shipping_cost,
+            selling_price: product.recommended_price,
+            supplier_link: product.cj_url,
+            description: product.notes || '',
+            shipping_time_days: product.total_days_max
+        };
+
+        try {
+            await navigator.clipboard.writeText(JSON.stringify(jsonData, null, 2));
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy:', err);
+        }
+        setShowMenu(false);
+    };
+
     return (
         <div className="relative">
             <Link href={`/products/${product.id}`} className="block">
@@ -197,6 +223,13 @@ function ProductCard({ product, t, onUpdate }: { product: Product, t: TranslateF
                                 {t('quickReject')}
                             </button>
                         )}
+                        <button
+                            onClick={handleCopyForAI}
+                            className="w-full flex items-center gap-2 px-4 py-2 text-sm text-[var(--text-main)] hover:bg-gray-50 transition-colors"
+                        >
+                            <Copy className="w-4 h-4 text-blue-500" />
+                            {copied ? t('copied') : t('copyForAI')}
+                        </button>
                         <div className="border-t border-gray-100 my-1"></div>
                         <button
                             onClick={handleDelete}

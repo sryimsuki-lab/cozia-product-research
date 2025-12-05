@@ -19,6 +19,7 @@ export interface Product {
     delivery_days_max: number;
     total_days_max: number;
     us_warehouse: boolean;
+    chinese_inventory: boolean;
     inventory_count: number;
     images: string[];
     notes: string;
@@ -54,6 +55,7 @@ export interface ProductFormData {
     delivery_days_min: number;
     delivery_days_max: number;
     us_warehouse: boolean;
+    chinese_inventory: boolean;
     inventory_count: number;
     images: string[];
     notes: string;

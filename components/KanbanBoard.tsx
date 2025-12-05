@@ -23,6 +23,7 @@ function exportProductsToJSON(products: Product[], filename: string) {
         category: p.category,
         inventory: p.inventory_count,
         us_warehouse: p.us_warehouse,
+        chinese_inventory: p.chinese_inventory,
         profit_margin: p.profit_margin_percent
     }));
 
@@ -228,6 +229,11 @@ function ProductCard({ product, t, onUpdate }: { product: Product, t: TranslateF
                         {isSweetSpot && (
                             <span className="text-[10px] font-bold bg-[var(--success)]/10 text-[var(--success)] px-2 py-0.5 rounded-full">
                                 {t('sweetSpot')}
+                            </span>
+                        )}
+                        {product.chinese_inventory && (
+                            <span className="text-[10px] font-bold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full border border-amber-200">
+                                {t('chineseOnly')}
                             </span>
                         )}
                         <div className="ml-auto flex items-center gap-1 text-xs text-[var(--text-secondary)]">

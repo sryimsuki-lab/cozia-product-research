@@ -40,6 +40,7 @@ export function ProductForm() {
         delivery_days_min: 3,
         delivery_days_max: 8,
         us_warehouse: false,
+        chinese_inventory: false,
         inventory_count: 0,
         images: [] as string[],
         notes: '',
@@ -472,10 +473,14 @@ export function ProductForm() {
                         {t('total')}: {calculations?.total_days_min} - {calculations?.total_days_max} {t('days')}
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 space-y-2">
                         <label className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-50 rounded-lg transition-colors">
                             <input type="checkbox" name="us_warehouse" checked={formData.us_warehouse} onChange={handleChange} className="w-5 h-5 text-sage rounded focus:ring-sage" />
                             <span className="font-medium text-charcoal">{t('usWarehouse')}</span>
+                        </label>
+                        <label className="flex items-center space-x-2 cursor-pointer p-2 hover:bg-amber-50 rounded-lg transition-colors border border-amber-200">
+                            <input type="checkbox" name="chinese_inventory" checked={formData.chinese_inventory} onChange={handleChange} className="w-5 h-5 text-amber-500 rounded focus:ring-amber-500" />
+                            <span className="font-medium text-amber-700">{t('chineseInventory')}</span>
                         </label>
                     </div>
                 </div>

@@ -32,6 +32,7 @@ model Product {
   
   // Inventory
   us_warehouse        Boolean
+  chinese_inventory   Boolean   @default(false)
   inventory_count     Int
   
   // Calculated Pricing

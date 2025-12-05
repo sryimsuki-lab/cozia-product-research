@@ -16,9 +16,11 @@ function safeJsonParse<T>(json: string, fallback: T): T {
 
 export async function submitProduct(data: ProductSubmitPayload) {
     try {
+        console.log("Submitting product data:", JSON.stringify(data, null, 2));
         const product = await prisma.product.create({
             data: {
                 ...data,
+                notes: data.notes || null,
                 images: JSON.stringify(data.images),
                 rejection_reasons: JSON.stringify(data.rejection_reasons),
                 ai_scores: data.ai_scores ? JSON.stringify(data.ai_scores) : null,
@@ -28,8 +30,9 @@ export async function submitProduct(data: ProductSubmitPayload) {
         revalidatePath('/products');
         return { success: true, product };
     } catch (error) {
-        console.error("Failed to submit product:", error);
-        return { success: false, error: "Failed to save product" };
+        const errorMessage = error instanceof Error ? error.message : "Unknown database error";
+        console.error("Failed to submit product:", errorMessage, error);
+        return { success: false, error: errorMessage };
     }
 }
 

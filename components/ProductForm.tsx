@@ -193,7 +193,8 @@ export function ProductForm() {
         if (result.success) {
             router.push('/');
         } else {
-            alert(t('error'));
+            console.error("Submit failed:", result);
+            alert(`${t('error')}: ${result.error || 'Unknown error'}`);
         }
         setLoading(false);
     };

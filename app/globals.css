@@ -12,6 +12,12 @@
   --accent-gray: #F5F5F5;
   /* For cards/backgrounds */
 
+  /* Brand Colors */
+  --sage: #6B8E6B;
+  --sage-dark: #4A6B4A;
+  --cream: #FFFBF0;
+  --charcoal: #2C3E2C;
+
   /* Status Colors */
   --success: #34C759;
   --warning: #FF9500;

@@ -515,7 +515,8 @@ export function ProductForm() {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-sage hover:bg-sage-dark text-white font-bold py-3 rounded-lg transition-colors flex justify-center items-center gap-2"
+                    style={{ backgroundColor: 'var(--sage, #6B8E6B)' }}
+                    className="w-full hover:opacity-90 text-white font-bold py-3 rounded-lg transition-colors flex justify-center items-center gap-2"
                 >
                     {loading && <Loader2 className="animate-spin w-5 h-5" />}
                     {t('submit')}

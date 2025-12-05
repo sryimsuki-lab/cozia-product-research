@@ -137,6 +137,8 @@ export const translations = {
     checkingDuplicate: "Checking for duplicates...",
     copyForAI: "Copy for AI",
     copied: "Copied!",
+    exportAll: "Export All",
+    exportColumn: "Export this column",
   },
   kh: {
     appTitle: "ឧបករណ៍ស្រាវជ្រាវផលិតផល COZIA",
@@ -276,6 +278,8 @@ export const translations = {
     checkingDuplicate: "កំពុងពិនិត្យមើលផលិតផលស្ទួន...",
     copyForAI: "ចម្លងសម្រាប់ AI",
     copied: "បានចម្លង!",
+    exportAll: "នាំចើញទាំងអស់",
+    exportColumn: "នាំចើញជួរឈារនេះ",
   }
 };
 

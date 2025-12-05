@@ -2,13 +2,38 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { MoreHorizontal, Calendar, CheckCircle, XCircle, Trash2, Copy } from 'lucide-react';
+import { MoreHorizontal, Calendar, CheckCircle, XCircle, Trash2, Copy, Download } from 'lucide-react';
 import { useLanguage } from './LanguageToggle';
 import { updateProductStatus, deleteProduct } from '@/lib/database';
 import { useRouter } from 'next/navigation';
 import type { Product } from '@/lib/types';
 
 type TranslateFunction = (key: string) => string;
+
+// Export products to JSON file
+function exportProductsToJSON(products: Product[], filename: string) {
+    const exportData = products.map(p => ({
+        product_name: p.name,
+        supplier_price: p.product_cost,
+        shipping_cost: p.shipping_cost,
+        selling_price: p.recommended_price,
+        supplier_link: p.cj_url,
+        description: p.notes || '',
+        shipping_time_days: p.total_days_max,
+        category: p.category,
+        inventory: p.inventory_count,
+        us_warehouse: p.us_warehouse,
+        profit_margin: p.profit_margin_percent
+    }));
+
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${filename}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
 
 export function KanbanBoard({ products }: { products: Product[] }) {
     const { t } = useLanguage();
@@ -25,6 +50,15 @@ export function KanbanBoard({ products }: { products: Product[] }) {
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold text-[var(--text-main)]">{t('pipeline')}</h1>
                 <div className="flex gap-2">
+                    {products.length > 0 && (
+                        <button
+                            onClick={() => exportProductsToJSON(products, 'cozia-all-products')}
+                            className="px-3 py-1.5 text-sm font-medium bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-1"
+                        >
+                            <Download className="w-4 h-4" />
+                            {t('exportAll')}
+                        </button>
+                    )}
                     <Link href="/submit" className="px-3 py-1.5 text-sm font-medium bg-[var(--accent-black)] text-white rounded-lg hover:opacity-90 transition-opacity">{t('newProduct')}</Link>
                 </div>
             </div>
@@ -39,6 +73,15 @@ export function KanbanBoard({ products }: { products: Product[] }) {
                                 <h3 className="font-semibold text-[var(--text-main)]">{t('toReview')}</h3>
                                 <span className="text-xs text-[var(--text-secondary)] bg-gray-100 px-2 py-0.5 rounded-full">{columns.review.length}</span>
                             </div>
+                            {columns.review.length > 0 && (
+                                <button
+                                    onClick={() => exportProductsToJSON(columns.review, 'cozia-review-products')}
+                                    className="p-1.5 rounded-lg hover:bg-gray-200 transition-colors"
+                                    title={t('exportColumn')}
+                                >
+                                    <Download className="w-4 h-4 text-gray-500" />
+                                </button>
+                            )}
                         </div>
                         <div className="space-y-3 overflow-y-auto flex-1 pr-1 custom-scrollbar">
                             {columns.review.map((product) => (
